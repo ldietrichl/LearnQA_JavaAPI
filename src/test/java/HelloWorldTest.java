@@ -4,14 +4,15 @@ import org.junit.jupiter.api.Test;
 
 public class HelloWorldTest {
 
+
     @Test
     public void testHelloWorld(){
-            System.out.println("Hello from Dietrich");
-      /*
+        System.out.println("Hello from Dietrich");
+
         Response response = RestAssured
-                .get("https://playground.learnqa.ru/api/hello")
+                .get("https://playground.learnqa.ru/api/get_text")
                 .andReturn();
         response.prettyPrint();
-*/
+
     }
 }
