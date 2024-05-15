@@ -22,7 +22,7 @@ public class YourTestClass {
 
 
         // Чтение данных из CSV и отправка запроса для каждой строки
-        while ((data = csvReader.readNext()) != null) {
+        while ((data = csvReader.readNext()) != null ) {
 
             //Map<String, String> data2 = new HashMap<>();
             //data2.put("login","super_admin");
@@ -48,7 +48,7 @@ public class YourTestClass {
 
             Map<String, String> cookies = new HashMap<>();
             if(responceCookies != null){
-                cookies.put("auth_cookie", responceCookies.toString());
+                cookies.putAll(responceCookies);
             }
 
 
@@ -61,10 +61,15 @@ public class YourTestClass {
                     .post("https://playground.learnqa.ru/api/check_auth_cookie")
                     .andReturn();
 
-
-            responseForCheck.print();
+            String respMessage  = responseForCheck.print().toString();
+            //System.out.println(respMessage);
             System.out.println("-----------------------------------------------------------");
 
+
+            if ("You are authorized".equals(respMessage)){
+                System.out.println("Password found");
+                break;
+            }
         }
         csvReader.close();
     }
