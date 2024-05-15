@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class HelloWorldTest {
 
@@ -173,16 +172,7 @@ public class HelloWorldTest {
         }
 
 
-        Response responseForCheck = RestAssured
-                .given()
-                .body(data)
-                .cookies(cookies)
-                .when()
-                .post("https://playground.learnqa.ru/api/check_auth_cookie")
-                .andReturn();
 
-
-        responseForCheck.print();
 
     }
 }
