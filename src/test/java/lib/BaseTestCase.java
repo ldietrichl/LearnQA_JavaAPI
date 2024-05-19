@@ -13,6 +13,7 @@ public class BaseTestCase {
 
         assertTrue(headers.hasHeaderWithName(name), "Response doesn't have header with name " + name);
         return headers.getValue(name);
+
     }
 
     protected String getCookie(Response response, String name) {

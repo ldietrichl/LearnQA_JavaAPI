@@ -1,7 +1,6 @@
 package tests;
 
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lib.BaseTestCase;
@@ -13,9 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserAuth extends BaseTestCase {
 
@@ -40,6 +36,14 @@ public class UserAuth extends BaseTestCase {
         this.header = this.getHeader(responseGetAuth,"x-csrf-token");
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth,"user_id");
 
+        System.out.println(responseGetAuth.getHeader("x-csrf-token"));
+        Assertions.assertCookieLength(responseGetAuth,"x-csrf-token",100);
+
+        //System.out.println(this.header);
+
+
+
+
 
     }
 
@@ -54,6 +58,9 @@ public class UserAuth extends BaseTestCase {
                 .andReturn();
 
         Assertions.assertJsonByName(responseCheckAuth,"user_id",this.userIdOnAuth);
+
+
+
     }
 
     @ParameterizedTest
