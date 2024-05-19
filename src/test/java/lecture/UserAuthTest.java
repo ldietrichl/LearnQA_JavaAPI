@@ -1,8 +1,9 @@
+package lecture;
+
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import io.restassured.http.Headers;
 import org.junit.jupiter.params.ParameterizedTest;
