@@ -37,7 +37,7 @@ public class UserAuth extends BaseTestCase {
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth,"user_id");
 
         System.out.println(responseGetAuth.getHeader("x-csrf-token"));
-        Assertions.assertCookieLength(responseGetAuth,"x-csrf-token",100);
+        Assertions.assertHeaderLength(responseGetAuth,"x-csrf-token",100);
 
         //System.out.println(this.header);
 

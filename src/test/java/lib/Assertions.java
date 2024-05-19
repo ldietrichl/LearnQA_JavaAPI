@@ -16,13 +16,23 @@ public class Assertions {
 
 
 
-    public static void assertCookieLength(Response response, String headerName, int minLenght) {
+    public static void assertHeaderLength(Response response, String headerName, int minLenght) {
         String headerValue = response.getHeader(headerName);
         assertTrue(headerValue != null, "Response doesn't have '" + headerName + "' cookie");
 
         int actualLength = headerValue.length();
         assertTrue(actualLength>=minLenght,
                    "Header length is not equal to the expected value. Current length: "+ actualLength + "Border length: "+minLenght);
+
+    }
+
+    public static void assertAnswerLength(Response response,  int minLenght) {
+        String bodyValue = response.getBody().toString();
+        assertTrue(bodyValue != null, "Response doesn't have body");
+
+        int actualLength = bodyValue.length();
+        assertTrue(actualLength>=minLenght,
+                "Body length is not equal to the expected value. Current length: "+ actualLength + ". Border length: "+minLenght);
 
     }
 }

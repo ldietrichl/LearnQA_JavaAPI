@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import lib.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloWorldTest {
 
@@ -230,6 +232,7 @@ public class HelloWorldTest {
                 .jsonPath();
         String answer = response.getString("answer");
         assertEquals("Hello, "+name, answer,"The answer is not expected");
+        System.out.println(answer);
 
 
 
@@ -262,6 +265,49 @@ public class HelloWorldTest {
         assertEquals("Hello, someone", answer,"The answer is not expected");
 
 
+
+    }
+
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"empty line", "John", "Pete", "null", "some 15 chars"})
+    public void Homework_10(String name) {
+        Map<String, String> queryParams = new HashMap<>();
+
+
+        if ("null".equals(name)) {
+            name = null;
+        } else if ("empty line".equals(name)) {
+            name = "";
+        } else if ("some 15 chars".equals(name)) {
+            name = "0123456789ABCDE"; // строка длиной > 15 символов
+        }
+
+        if (name != null && !name.isEmpty()) {
+            queryParams.put("name", name);
+        }
+
+        Response response = RestAssured
+                .given()
+                .queryParams(queryParams)
+                .get("https://playground.learnqa.ru/api/hello")
+                .andReturn();
+
+        JsonPath jsonPath = response.jsonPath();
+        String answer = jsonPath.getString("answer");
+
+        System.out.println(answer);
+
+        if ("0123456789ABCDE".equals(name)) {
+            assertTrue(answer.length() >= 15,
+                       "The answer length is not at least 15 characters. Expected : <=15. Actual: "+answer.length());
+        }
+
+        Assertions.assertAnswerLength(response,200);
+
+        String expectedName = (name == null || name.isEmpty()) ? "someone" : name;
+        assertEquals("Hello, " + expectedName, answer, "The answer is not expected");
 
     }
 
