@@ -20,6 +20,6 @@ public class Homework11 {
 
         String locatiuonCokies  = response.getCookies().toString();
         System.out.println(locatiuonCokies);
-        Assertions.assertCookieHw(response,"HomeWork","hw_value2");
+        Assertions.assertCookieHw(response,"HomeWork","hw_value");
     }
 }
