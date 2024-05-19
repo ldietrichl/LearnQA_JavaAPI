@@ -44,5 +44,15 @@ public class Assertions {
     }
 
 
+    public static void assertHeaderHw(Response response, String headerName, String expectedValue) {
+        String headerValue = response.getHeader(headerName);
+        assertTrue(headerValue != null, "Response doesn't have '" + headerName + "' header");
+
+        String value = response.getHeader(headerName);
+        assertEquals(expectedValue,value,
+                "Header value is not equal to the expected value");
+
+    }
+
 
 }
