@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static lib.Assertions.assertAnswerLength;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -304,7 +305,7 @@ public class HelloWorldTest {
                        "The answer length is not at least 15 characters. Expected : <=15. Actual: "+answer.length());
         }
 
-        Assertions.assertAnswerLength(response,200);
+        assertAnswerLength(response,200);
 
         String expectedName = (name == null || name.isEmpty()) ? "someone" : name;
         assertEquals("Hello, " + expectedName, answer, "The answer is not expected");

@@ -35,4 +35,14 @@ public class Assertions {
                 "Body length is not equal to the expected value. Current length: "+ actualLength + ". Border length: "+minLenght);
 
     }
+
+    public static void assertCookieHw(Response response, String name, String expectedValue) {
+        response.then().assertThat().cookie(name);
+
+        String value = response.getCookie(name);
+        assertEquals(expectedValue,value,"Cookie '"+name+"' value is not equal to expected value");
+    }
+
+
+
 }
