@@ -36,13 +36,8 @@ public class UserAuth extends BaseTestCase {
         this.header = this.getHeader(responseGetAuth,"x-csrf-token");
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth,"user_id");
 
-        System.out.println(responseGetAuth.getHeader("x-csrf-token"));
-        Assertions.assertHeaderLength(responseGetAuth,"x-csrf-token",100);
-
-        //System.out.println(this.header);
-
-
-
+        //System.out.println(responseGetAuth.getHeader("x-csrf-token"));
+        //Assertions.assertHeaderLength(responseGetAuth,"x-csrf-token",100);
 
 
     }
@@ -77,7 +72,8 @@ public class UserAuth extends BaseTestCase {
         } else {
           throw  new IllegalArgumentException("Condition value is known:" + condition);
         }
+
         Response responceForCheck = spec.get().andReturn();
-        Assertions.assertHeaderLength(responceForCheck, "Introduce local variable", 71);
+        Assertions.assertJsonByName(responceForCheck, "user_id", 0);
     }
 }

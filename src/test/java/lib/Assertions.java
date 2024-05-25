@@ -21,6 +21,11 @@ public class Assertions {
         assertEquals(expectedValue,value,"JSON value "+name+" is not equal to expected value");
     }
 
+    public static void assertJsonHasField(Response response, String expectedFieldName){
+        response.then().assertThat().body("$", hasKey(expectedFieldName));
+
+    }
+
 
 
     public static void assertHeaderLength(Response response, String headerName, int minLenght) {
@@ -43,6 +48,22 @@ public class Assertions {
 
     }
 
+    public static void assertResponseTextEquals(Response response, String expectedAnswer){
+        assertEquals(
+                expectedAnswer,
+                response.asString(),
+                "Response text is not as expected"
+        );
+    }
+
+    public static void assertResponseCodeEquals(Response response, int expectedStatusCode){
+        assertEquals(
+                expectedStatusCode,
+                response.statusCode(),
+                "Response status code is not as expected"
+        );
+    }
+
     public static void assertCookieHw(Response response, String name, String expectedValue) {
         response.then().assertThat().cookie(name);
 
@@ -61,5 +82,14 @@ public class Assertions {
 
     }
 
+    public static void asserJsonNotField(Response response, String unexpectedFieldName){
+        response.then().body("$",not(hasKey(unexpectedFieldName)));
+    }
+
+    public static void assertJsonHasFields(Response response, String[] expectedFieldNames){
+        for (String expectedFieldsNames : expectedFieldNames){
+            Assertions.assertJsonHasField(response,expectedFieldsNames);
+        }
+    }
 
 }
