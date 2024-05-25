@@ -14,6 +14,13 @@ public class Assertions {
         assertEquals(expectedValue,value,"JSON value is not equal to expected value");
     }
 
+    public static void assertJsonBodyValue(Response response, String name, String expectedValue){
+        response.then().assertThat().body("$", hasKey(name));
+
+        String value = response.jsonPath().getString(name);
+        assertEquals(expectedValue,value,"JSON value is not equal to expected value");
+    }
+
 
 
     public static void assertHeaderLength(Response response, String headerName, int minLenght) {
@@ -22,7 +29,7 @@ public class Assertions {
 
         int actualLength = headerValue.length();
         assertTrue(actualLength>=minLenght,
-                   "Header length is not equal to the expected value. Current length: "+ actualLength + "Border length: "+minLenght);
+                   "Header length is not equal to the expected value. Current length: "+ actualLength + ". Border length: "+minLenght);
 
     }
 

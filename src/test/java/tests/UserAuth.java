@@ -78,6 +78,6 @@ public class UserAuth extends BaseTestCase {
           throw  new IllegalArgumentException("Condition value is known:" + condition);
         }
         Response responceForCheck = spec.get().andReturn();
-        Assertions.assertJsonByName(responceForCheck, "user_id", 0);
+        Assertions.assertHeaderLength(responceForCheck, "Introduce local variable", 71);
     }
 }
