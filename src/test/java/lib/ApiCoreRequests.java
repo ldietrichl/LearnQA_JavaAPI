@@ -52,4 +52,16 @@ public class ApiCoreRequests {
 
     }
 
+    @Step("Make a POST-request for registration")
+    public Response makePostRequestInvalidEmail(String url, Map<String, String> userData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+
+    }
+
+
+
 }

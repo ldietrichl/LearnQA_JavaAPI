@@ -3,11 +3,18 @@ package lib;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class DataGenerator {
     public static String getRandomEmail(){
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
         return "learnqa" + timestamp + "@example.com";
+
+    }
+
+    public static String getInvalidEmail(){
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+        return "learnqa" + timestamp + "example.com";
 
     }
 
@@ -22,9 +29,10 @@ public class DataGenerator {
         return data;
     }
 
-    public static Map<String, String> getRegistrationData(Map<String, String> nonDefaultValues) {
-        Map<String,String> defaultValues = DataGenerator.getRegistrationData();
 
+    public static Map<String, String> getRegistrationData(Map<String, String> nonDefaultValues) {
+
+        Map<String,String> defaultValues = DataGenerator.getRegistrationData();
         Map<String,String> userData = new HashMap<>();
         String[]  keys ={"email","password","username","firstName","lastName"};
         for (String key : keys){
@@ -35,6 +43,19 @@ public class DataGenerator {
             }
         }
         return userData;
+
+    }
+
+    public static String generateRandomString(int length) {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            char randomChar = (char) (random.nextInt(26) + 'a'); // Генерация случайного символа в нижнем регистре (a-z)
+            sb.append(randomChar);
+        }
+
+        return sb.toString();
     }
 
 }
