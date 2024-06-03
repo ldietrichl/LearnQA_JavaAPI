@@ -17,10 +17,8 @@ public class UserRegisterTest extends BaseTestCase {
     public void TestCreateUserWithExistingEmail(){
         Map<String, String> userData = new HashMap<>();
         userData.put("email",email);
-        userData.put("password","123");
-        userData.put("username","learnqa");
-        userData.put("firstName","learnqa");
-        userData.put("lastName","learnqa");
+        userData = DataGenerator.getRegistrationData(userData);
+
 
         Response responseCreateAuth = RestAssured
                 .given()
@@ -40,12 +38,8 @@ public class UserRegisterTest extends BaseTestCase {
     @Test
     public void TestCreateUserSuccessfully(){
         String email = DataGenerator.getRandomEmail();
-        Map<String, String> userData = new HashMap<>();
-        userData.put("email",email);
-        userData.put("password","123");
-        userData.put("username","learnqa");
-        userData.put("firstName","learnqa");
-        userData.put("lastName","learnqa");
+        Map<String, String> userData =DataGenerator.getRegistrationData();
+
 
         Response responseCreateAuth = RestAssured
                 .given()
@@ -56,7 +50,7 @@ public class UserRegisterTest extends BaseTestCase {
         Assertions.assertResponseCodeEquals( responseCreateAuth,200);
         Assertions.assertJsonHasField( responseCreateAuth,"id");
        // Assertions.assertResponseTextEquals(responseCreateAuth,"Users with email '"+ email + "' already exists");
-        System.out.println(responseCreateAuth.asString());
+       // System.out.println(responseCreateAuth.asString());
 
 
 
