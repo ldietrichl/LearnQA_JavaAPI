@@ -2,9 +2,11 @@ package lib;
 
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -52,6 +54,16 @@ public class ApiCoreRequests {
 
     }
 
+    @Step("Make a POST-requests with token only")
+    public Response makeGetRequestWithAuth(String url, Map<String, String> authData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(authData)
+                .get(url)
+                .andReturn();
+
+    }
+
     @Step("Make a POST-request for registration")
     public Response makePostRequestInvalidEmail(String url, Map<String, String> userData){
         return given()
@@ -61,6 +73,10 @@ public class ApiCoreRequests {
                 .andReturn();
 
     }
+
+
+
+
 
 
 

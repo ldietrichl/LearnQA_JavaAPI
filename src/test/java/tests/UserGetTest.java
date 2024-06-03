@@ -41,6 +41,9 @@ public class UserGetTest extends BaseTestCase {
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
+
+
+
         Response responseUserData = RestAssured
                 .given()
                 .header("x-csrf-token",header)
