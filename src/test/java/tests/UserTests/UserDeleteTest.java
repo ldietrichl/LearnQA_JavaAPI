@@ -30,12 +30,13 @@ public class UserDeleteTest extends BaseTestCase {
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
         authData.put("password", "1234");
-        System.out.println(authData);
+        //System.out.println(authData);
 
         Response responseGetAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/login",
                         authData
                 );
+
         this.userId = responseGetAuth.jsonPath().getString("user_id");
 
         Assertions.assertResponseCodeEquals( responseGetAuth,200);

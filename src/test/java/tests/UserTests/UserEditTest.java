@@ -43,7 +43,7 @@ public class UserEditTest extends BaseTestCase {
         String newName = "Changed Name";
         Map<String,String> editData = new HashMap<>();
         editData.put("firstName", newName);
-        System.out.println(editData);
+        //System.out.println(editData);
 
 
         Response responseEditUser = RestAssured
