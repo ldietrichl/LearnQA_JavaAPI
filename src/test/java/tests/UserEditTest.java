@@ -16,7 +16,7 @@ import static lib.Assertions.assertJsonByName;
 public class UserEditTest extends BaseTestCase {
     @Test
     public void testEditJustCreatedTest() {
-        //GENERATE USER
+        //GENERATE USER AND CREATE
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
         JsonPath responseCreateAuth = RestAssured
@@ -42,6 +42,7 @@ public class UserEditTest extends BaseTestCase {
         String newName = "Changed Name";
         Map<String,String> editData = new HashMap<>();
         editData.put("firstName", newName);
+        System.out.println(editData);
 
 
         Response responseEditUser = RestAssured

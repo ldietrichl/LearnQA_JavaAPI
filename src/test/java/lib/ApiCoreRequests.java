@@ -24,6 +24,28 @@ public class ApiCoreRequests {
 
     }
 
+    @Step("Make a PUT-requests with token and auth cookie")
+    public Response makePutEditRequest(String url, String token, String cookie, Map<String, String> EditData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(EditData)
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .put(url)
+                .andReturn();
+
+    }
+
+    @Step("Make a PUT-requests w/o token and auth cookie")
+    public Response makePutEditRequestNoAuth(String url,  Map<String, String> EditData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(EditData)
+                .put(url)
+                .andReturn();
+
+    }
+
     @Step("Make a GET-requests with auth cookie only")
     public Response makeGetRequestWithCookie(String url,  String cookie){
         return given()
@@ -53,6 +75,7 @@ public class ApiCoreRequests {
                 .andReturn();
 
     }
+
 
     @Step("Make a POST-requests with token only")
     public Response makeGetRequestWithAuth(String url, Map<String, String> authData){
