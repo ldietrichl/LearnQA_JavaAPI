@@ -1,4 +1,4 @@
-package tests;
+package tests.UserTests;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

@@ -1,4 +1,4 @@
-package tests;
+package tests.UserTests;
 
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
@@ -6,7 +6,6 @@ import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -140,8 +139,18 @@ public class UserDeleteTest extends BaseTestCase {
     @Description("This test try delete stranger user w/o AuthData")
     @DisplayName("Test negative delete stranger")
     public void testDelStranger() {
+        //GENERATE Stranger
+        Map<String,String>  userData2 = DataGenerator.getRegistrationData();
 
-        //GENERATE USER
+        Response responseCreateAuth1 = apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user/",
+                        userData2
+                );
+        responseCreateAuth1.prettyPrint();
+        String strangerId = responseCreateAuth1.jsonPath().getString("id");
+        System.out.println(strangerId);
+
+        //GENERATE USER 2
         this.userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests
@@ -162,7 +171,6 @@ public class UserDeleteTest extends BaseTestCase {
                 );
 
         //System.out.println(userId);
-        int strangerId=responseGetAuth.jsonPath().getInt("user_id")-100;
         //System.out.println(strangerId);
 
         //responseGetAuth.prettyPrint();
