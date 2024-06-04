@@ -29,6 +29,17 @@ public class DataGenerator {
         return data;
     }
 
+    public static Map<String, String> getRegistrationDataStranger() {
+        Map<String,String> data = new HashMap<>();
+        data.put("email",DataGenerator.getRandomEmail());
+        data.put("password", "123");
+        data.put("username", "learnq");
+        data.put("firstName", "learnq");
+        data.put("lastName", "learnq");
+
+        return data;
+    }
+
 
     public static Map<String, String> getRegistrationData(Map<String, String> nonDefaultValues) {
 

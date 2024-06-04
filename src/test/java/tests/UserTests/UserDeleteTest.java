@@ -140,23 +140,27 @@ public class UserDeleteTest extends BaseTestCase {
     @DisplayName("Test negative delete stranger")
     public void testDelStranger() {
         //GENERATE Stranger
-        Map<String,String>  userData2 = DataGenerator.getRegistrationData();
+        Map<String,String>  userData2 = DataGenerator.getRegistrationDataStranger();
+        //System.out.println(userData2);
 
         Response responseCreateAuth1 = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/",
                         userData2
                 );
-        responseCreateAuth1.prettyPrint();
+        //responseCreateAuth1.prettyPrint();
         String strangerId = responseCreateAuth1.jsonPath().getString("id");
-        System.out.println(strangerId);
+        //System.out.println(strangerId);
 
         //GENERATE USER 2
         this.userData = DataGenerator.getRegistrationData();
+        //System.out.println(userData);
 
         Response responseCreateAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/",
                         userData
                 );
+        String MyId = responseCreateAuth1.jsonPath().getString("id");
+        //System.out.println(MyId);
 
         //responseCreateAuth.prettyPrint();
 
