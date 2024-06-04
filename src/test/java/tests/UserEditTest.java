@@ -14,6 +14,7 @@ import java.util.Map;
 import static lib.Assertions.assertJsonByName;
 
 public class UserEditTest extends BaseTestCase {
+
     @Test
     public void testEditJustCreatedTest() {
         //GENERATE USER AND CREATE

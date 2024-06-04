@@ -50,6 +50,7 @@ public class UserGetTest extends BaseTestCase {
                 .cookie("auth_sid",cookie)
                 .get("https://playground.learnqa.ru/api/user/2")
                 .andReturn();
+        responseUserData.prettyPrint();
 
 
         String[]  expectedFields= {"username","firstName","lastName","email"};
