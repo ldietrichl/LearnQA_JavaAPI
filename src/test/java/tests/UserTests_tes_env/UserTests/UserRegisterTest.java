@@ -1,13 +1,13 @@
-package tests.UserTests;
+package tests.UserTests_tes_env.UserTests;
 
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
+import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import lib.ApiCoreRequests;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

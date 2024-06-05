@@ -1,8 +1,6 @@
 package tests.UserTests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
@@ -14,11 +12,9 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.String.valueOf;
-
 @Epic("Delete user cases")
 @Feature("Homework")
-public class UserDeleteTest extends BaseTestCase {
+public class UserDeleteTestAllure extends BaseTestCase {
     String userId;
     Map<String,String> userData;
     String cookie;
@@ -82,6 +78,7 @@ public class UserDeleteTest extends BaseTestCase {
 
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @Description("This test  generate and delete user")
     @DisplayName("Test positive delete user")
     public void deleteGeneratedUser() {
@@ -140,6 +137,7 @@ public class UserDeleteTest extends BaseTestCase {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @Description("This test try delete stranger user w/o AuthData")
     @DisplayName("Test negative delete stranger")
     public void testDelStranger() {

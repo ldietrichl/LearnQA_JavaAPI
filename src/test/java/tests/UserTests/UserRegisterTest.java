@@ -1,6 +1,7 @@
 package tests.UserTests;
 
-import io.qameta.allure.Description;
+import io.qameta.allure.*;
+import io.qameta.allure.model.Status;
 import io.restassured.response.Response;
 import lib.Assertions;
 import lib.BaseTestCase;
@@ -14,144 +15,140 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
+import io.qameta.allure.*;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Epic("Registration cases")
+@Feature("User Registration")
 public class UserRegisterTest extends BaseTestCase {
     String email = "vinkotov@example.com";
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Story("Register existing user")
+    @Description("This test tries to create a user with an email that already exists in the system")
+    @DisplayName("Test Create User With Existing Email")
+    @Severity(SeverityLevel.CRITICAL)
     public void TestCreateUserWithExistingEmail(){
         Map<String, String> userData = new HashMap<>();
-        userData.put("email",email);
+        userData.put("email", email);
         userData = DataGenerator.getRegistrationData(userData);
-
 
         Response responseCreateAuth = given()
                 .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
+                .post("https://playground.learnqa.ru/api_dev/user/")
                 .andReturn();
 
-        Assertions.assertResponseCodeEquals( responseCreateAuth,400);
-        Assertions.assertResponseTextEquals(responseCreateAuth,"Users with email '"+ email + "' already exists");
-
-
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
+        Assertions.assertResponseTextEquals(responseCreateAuth, "Users with email '" + email + "' already exists");
     }
-
-
 
     @ParameterizedTest
     @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
-    @Description("This test invalid registration user by too short field")
-    @DisplayName("Test negative test by too short field")
+    @Story("Invalid registration with too short field")
+    @Description("This test attempts to register a user with fields that are too short")
+    @DisplayName("Test Create User With Too Short Field")
+    @Severity(SeverityLevel.NORMAL)
     public void TestCreateUserWithShortField(String missingField){
-        Map<String, String> userData = new HashMap<>();
-        userData = DataGenerator.getRegistrationData(userData);
-        userData.put(missingField,"a");
-        //System.out.println(userData);
-
+        Map<String, String> userData = DataGenerator.getRegistrationData();
+        userData.put(missingField, "a");
 
         Response responseCreateAuth = apiCoreRequests
                 .makePostRequestInvalidEmail(
-                        "https://playground.learnqa.ru/api/user/",
+                        "https://playground.learnqa.ru/api_dev/user/",
                         userData
                 );
 
-        Assertions.assertResponseCodeEquals( responseCreateAuth,400);
-        Assertions.assertResponseTextEquals(responseCreateAuth,"The value of '"+missingField+"' field is too short");
-
-
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
+        Assertions.assertResponseTextEquals(responseCreateAuth, "The value of '" + missingField + "' field is too short");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
-    @Description("This test invalid registration user by too large field")
-    @DisplayName("Test negative test by too large field")
+    @Story("Invalid registration with too large field")
+    @Description("This test attempts to register a user with fields that are too long")
+    @DisplayName("Test Create User With Too Large Field")
+    @Severity(SeverityLevel.NORMAL)
     public void TestCreateUserWithLargeField(String missingField){
-        Map<String, String> userData = new HashMap<>();
-        userData = DataGenerator.getRegistrationData(userData);
-        userData.put(missingField,DataGenerator.generateRandomString(255));
-        //System.out.println(userData);
-
+        Map<String, String> userData = DataGenerator.getRegistrationData();
+        userData.put(missingField, DataGenerator.generateRandomString(255));
 
         Response responseCreateAuth = apiCoreRequests
                 .makePostRequestInvalidEmail(
-                        "https://playground.learnqa.ru/api/user/",
+                        "https://playground.learnqa.ru/api_dev/user/",
                         userData
                 );
 
-        Assertions.assertResponseCodeEquals( responseCreateAuth,400);
-        Assertions.assertResponseTextEquals(responseCreateAuth,"The value of '"+missingField+"' field is too long");
-
-
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
+        Assertions.assertResponseTextEquals(responseCreateAuth, "The value of '" + missingField + "' field is too long");
     }
-
-
 
     @ParameterizedTest
     @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
-    @Description("This test invalid registration user by missing fields")
-    @DisplayName("Test negative test by missing field")
+    @Story("Invalid registration with missing field")
+    @Description("This test attempts to register a user with missing fields")
+    @DisplayName("Test Create User With Missing Field")
+    @Severity(SeverityLevel.NORMAL)
     public void TestCreateUserWithMissingField(String missingField){
-        Map<String, String> userData = new HashMap<>();
-        userData = DataGenerator.getRegistrationData(userData);
+        Map<String, String> userData = DataGenerator.getRegistrationData();
         userData.remove(missingField);
-        //System.out.println(userData);
-
 
         Response responseCreateAuth = apiCoreRequests
                 .makePostRequestInvalidEmail(
-                        "https://playground.learnqa.ru/api/user/",
+                        "https://playground.learnqa.ru/api_dev/user/",
                         userData
                 );
 
-        Assertions.assertResponseCodeEquals( responseCreateAuth,400);
-        Assertions.assertResponseTextEquals(responseCreateAuth,"The following required params are missed: "+missingField);
-
-
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
+        Assertions.assertResponseTextEquals(responseCreateAuth, "The following required params are missed: " + missingField);
     }
-
-
-
-
 
     @Test
+    @Story("Successful user registration")
+    @Description("This test successfully creates a user")
+    @DisplayName("Test Create User Successfully")
+    @Severity(SeverityLevel.CRITICAL)
     public void TestCreateUserSuccessfully(){
         String email = DataGenerator.getRandomEmail();
-        Map<String, String> userData =DataGenerator.getRegistrationData();
-
+        Map<String, String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = given()
                 .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
+                .post("https://playground.learnqa.ru/api_dev/user/")
                 .andReturn();
 
-        Assertions.assertResponseCodeEquals( responseCreateAuth,200);
-        Assertions.assertJsonHasField( responseCreateAuth,"id");
-       // Assertions.assertResponseTextEquals(responseCreateAuth,"Users with email '"+ email + "' already exists");
-       // System.out.println(responseCreateAuth.asString());
-
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
+        Assertions.assertJsonHasField(responseCreateAuth, "id");
     }
 
     @Test
-    @Description("This test invalid registration user by email")
-    @DisplayName("Test negative invalid email format")
+    @Story("Invalid registration with invalid email")
+    @Description("This test attempts to register a user with an invalid email format")
+    @DisplayName("Test Create User With Invalid Email")
+    @Severity(SeverityLevel.NORMAL)
     public void TestCreateUserInvalidEmail(){
         String email = DataGenerator.getInvalidEmail();
-        Map<String, String> userData =DataGenerator.getRegistrationData();
-        userData.put("email",email);
+        Map<String, String> userData = DataGenerator.getRegistrationData();
+        userData.put("email", email);
 
         Response responseCreateAuth = apiCoreRequests
                 .makePostRequestInvalidEmail(
-                        "https://playground.learnqa.ru/api/user/",
+                        "https://playground.learnqa.ru/api_dev/user/",
                         userData
                 );
 
-        Assertions.assertResponseCodeEquals( responseCreateAuth,400);
-        Assertions.assertResponseTextEquals(responseCreateAuth,"Invalid email format");
-
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
+        Assertions.assertResponseTextEquals(responseCreateAuth, "Invalid email format");
     }
-
-
-
 }

@@ -1,6 +1,6 @@
 package tests.UserTests;
 
-import io.qameta.allure.Description;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static lib.Assertions.assertJsonByName;
-
+@Epic("Edit user cases")
+@Feature("Homework")
 public class UserEditTestHomework extends BaseTestCase {
     String userId;
     Map<String,String> userData;
@@ -28,7 +29,7 @@ public class UserEditTestHomework extends BaseTestCase {
         this.userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/",
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/",
                         userData
                 );
 
@@ -42,7 +43,7 @@ public class UserEditTestHomework extends BaseTestCase {
         authData.put("password", userData.get("password"));
 
         Response responseGetAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/login",
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/login",
                         authData
                 );
 
@@ -52,6 +53,7 @@ public class UserEditTestHomework extends BaseTestCase {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @Description("This test try change firstName w/o AuthData")
     @DisplayName("Test negative edit firstName")
     public void testEditNoAuth() {
@@ -63,7 +65,7 @@ public class UserEditTestHomework extends BaseTestCase {
 
         Response responseEditUserNoAuth = apiCoreRequests
                 .makePutEditRequestNoAuth(
-                        "https://playground.learnqa.ru/api/user/" + userId,
+                        "https://playground.learnqa.ru/api_dev/user/" + userId,
                         editData);
 
         //responseEditUserNoAuth.print();
@@ -81,7 +83,7 @@ public class UserEditTestHomework extends BaseTestCase {
         editDataEmail.put("email", newEmail);
 
         Response responseEditUserEmail = apiCoreRequests
-                .makePutEditRequest("https://playground.learnqa.ru/api/user/" + userId,
+                .makePutEditRequest("https://playground.learnqa.ru/api_dev/user/" + userId,
                         this.header,
                         this.cookie,
                         editDataEmail
@@ -92,6 +94,7 @@ public class UserEditTestHomework extends BaseTestCase {
         //responseEditUserEmail.prettyPrint();
     }
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @Description("This test trying change stranger email with AuthData")
     @DisplayName("Test negative change email")
     public void testEditStrangerEmail() {
@@ -101,7 +104,7 @@ public class UserEditTestHomework extends BaseTestCase {
         editDataStranger.put("email", newStrangerEmail);
 
         Response responseEditDataStrangerEmail = apiCoreRequests
-                .makePutEditRequest("https://playground.learnqa.ru/api/user/50",
+                .makePutEditRequest("https://playground.learnqa.ru/api_dev/user/50",
                         this.header,
                         this.cookie,
                         editDataStranger
@@ -120,7 +123,7 @@ public class UserEditTestHomework extends BaseTestCase {
             editDataName.put("firstName", "a");
 
             Response responseEditUserName = apiCoreRequests
-                    .makePutEditRequest("https://playground.learnqa.ru/api/user/" + userId,
+                    .makePutEditRequest("https://playground.learnqa.ru/api_dev/user/" + userId,
                             this.header,
                             this.cookie,
                             editDataName

@@ -1,4 +1,4 @@
-package tests.UserTests;
+package tests.UserTests_tes_env.UserTests;
 
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.String.valueOf;
 
 public class UserDeleteTest extends BaseTestCase {
     String userId;

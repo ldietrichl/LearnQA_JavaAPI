@@ -1,5 +1,7 @@
 package tests.UserTests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.Assertions;
@@ -9,11 +11,13 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("Get-test cases")
+@Feature("Lecture")
 public class UserGetTest extends BaseTestCase {
     @Test
     public void testGetUserDataNotAuth() {
         Response responseUserData = RestAssured
-                .get("https://playground.learnqa.ru/api/user/2")
+                .get("https://playground.learnqa.ru/api_dev/user/2")
                 .andReturn();
 
         Assertions.assertJsonHasField(responseUserData,"username");
@@ -35,7 +39,7 @@ public class UserGetTest extends BaseTestCase {
                 .given()
                 .contentType("application/json")
                 .body(authData)
-                .post("https://playground.learnqa.ru/api/user/login")
+                .post("https://playground.learnqa.ru/api_dev/user/login")
                 .andReturn();
 
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
@@ -48,7 +52,7 @@ public class UserGetTest extends BaseTestCase {
                 .given()
                 .header("x-csrf-token",header)
                 .cookie("auth_sid",cookie)
-                .get("https://playground.learnqa.ru/api/user/2")
+                .get("https://playground.learnqa.ru/api_dev/user/2")
                 .andReturn();
         responseUserData.prettyPrint();
 

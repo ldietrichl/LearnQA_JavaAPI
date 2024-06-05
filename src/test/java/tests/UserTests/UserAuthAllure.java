@@ -1,8 +1,6 @@
-package tests.UserTests_tes_env.UserTests;
+package tests.UserTests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -20,7 +18,7 @@ import java.util.Map;
 
 @Epic("Authorization cases")
 @Feature("Authorization")
-public class UserAuth extends BaseTestCase {
+public class UserAuthAllure extends BaseTestCase {
 
     String cookie;
     String header;
@@ -28,6 +26,7 @@ public class UserAuth extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @BeforeEach
+    @Step("Logging in user")
     public void loginUser() {
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
@@ -42,13 +41,13 @@ public class UserAuth extends BaseTestCase {
 
         //System.out.println(responseGetAuth.getHeader("x-csrf-token"));
         //Assertions.assertHeaderLength(responseGetAuth,"x-csrf-token",100);
-
-
     }
 
     @Test
-    @Description("This test successfully authorize user by email and password")
+    @Story("Successful authorization")
+    @Description("This test successfully authorizes user by email and password")
     @DisplayName("Test positive auth user")
+    @Severity(SeverityLevel.CRITICAL)
     public void testAuthUser() {
 
         Response responseCheckAuth = apiCoreRequests
@@ -59,13 +58,12 @@ public class UserAuth extends BaseTestCase {
                 );
 
         Assertions.assertJsonByName(responseCheckAuth,"user_id",this.userIdOnAuth);
-
-
-
     }
 
-    @Description("This test checks authorization status w/o cookie or token")
+    @Story("Unsuccessful authorization")
+    @Description("This test checks authorization status without cookie or token")
     @DisplayName("Test negative auth user")
+    @Severity(SeverityLevel.CRITICAL)
     @ParameterizedTest
     @ValueSource(strings = {"cookies", "headers"})
     public void testNegativeUser(String condition){
@@ -85,9 +83,8 @@ public class UserAuth extends BaseTestCase {
                     this.header
             );
             Assertions.assertJsonByName(responseForCheck,"user_id", 0);
-        }  else {
-            throw  new IllegalArgumentException("Condition value is not known:" + condition);
+        } else {
+            throw new IllegalArgumentException("Condition value is not known: " + condition);
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package tests.UserTests;
+package tests.UserTests_tes_env.UserTests;
 
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static lib.Assertions.assertJsonByName;
 
 public class UserEditTestHomework extends BaseTestCase {
     String userId;

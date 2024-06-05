@@ -1,4 +1,4 @@
-package tests.UserTests;
+package tests.UserTests_tes_env.UserTests;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;

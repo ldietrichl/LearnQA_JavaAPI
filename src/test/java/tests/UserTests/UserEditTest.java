@@ -1,5 +1,7 @@
 package tests.UserTests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -12,6 +14,9 @@ import java.util.Map;
 
 import static lib.Assertions.assertJsonByName;
 
+
+@Epic("Edit user cases")
+@Feature("Lecture")
 public class UserEditTest extends BaseTestCase {
 
     @Test
@@ -22,7 +27,7 @@ public class UserEditTest extends BaseTestCase {
         JsonPath responseCreateAuth = RestAssured
                 .given()
                 .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
+                .post("https://playground.learnqa.ru/api_dev/user/")
                 .jsonPath();
 
         String userId = responseCreateAuth.getString("id");
@@ -35,7 +40,7 @@ public class UserEditTest extends BaseTestCase {
         Response responseGetAuth = RestAssured
                 .given()
                 .body(authData)
-                .post("https://playground.learnqa.ru/api/user/login")
+                .post("https://playground.learnqa.ru/api_dev/user/login")
                 .andReturn();
 
         //EDIT
@@ -50,7 +55,7 @@ public class UserEditTest extends BaseTestCase {
                 .header("x-csrf-token", this.getHeader(responseGetAuth,"x-csrf-token"))
                 .cookie("auth_sid", this.getCookie(responseGetAuth,"auth_sid"))
                 .body(editData)
-                .put("https://playground.learnqa.ru/api/user/" + userId)
+                .put("https://playground.learnqa.ru/api_dev/user/" + userId)
                 .andReturn();
 
         //GET
@@ -59,7 +64,7 @@ public class UserEditTest extends BaseTestCase {
                 .given()
                 .header("x-csrf-token", this.getHeader(responseGetAuth,"x-csrf-token"))
                 .cookie("auth_sid", this.getCookie(responseGetAuth,"auth_sid"))
-                .get("https://playground.learnqa.ru/api/user/" + userId)
+                .get("https://playground.learnqa.ru/api_dev/user/" + userId)
                 .andReturn();
 
         assertJsonByName(responseUserData,"firstName", newName);

@@ -1,4 +1,4 @@
-package tests.UserTests;
+package tests.UserTests_tes_env.UserTests;
 
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
