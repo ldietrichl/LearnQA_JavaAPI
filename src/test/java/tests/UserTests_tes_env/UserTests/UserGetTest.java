@@ -1,4 +1,4 @@
-package tests;
+package tests.UserTests_tes_env.UserTests;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -41,12 +41,16 @@ public class UserGetTest extends BaseTestCase {
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
+
+
+
         Response responseUserData = RestAssured
                 .given()
                 .header("x-csrf-token",header)
                 .cookie("auth_sid",cookie)
                 .get("https://playground.learnqa.ru/api/user/2")
                 .andReturn();
+        responseUserData.prettyPrint();
 
 
         String[]  expectedFields= {"username","firstName","lastName","email"};
